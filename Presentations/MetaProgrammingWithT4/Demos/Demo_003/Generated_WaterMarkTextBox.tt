@@ -1,0 +1,16 @@
+﻿
+<#
+    Namespace ="Demo_003";
+
+    Model = new []
+    {
+        new ClassDefinition ("WaterMarkTextBox"                                             )
+            {
+                P ("bool"               , "IsWaterMarkVisible"                              , defaultValue:"true"                   ),
+                P ("Brush"              , "WaterMarkBrush"                                  ),
+                P ("string"             , "WaterMarkText"                                   , defaultValue:@"""Type text here...""" ),
+            },
+    };
+    // ------------------------------------------------------------------------
+#>
+<#@ include file="$(SolutionDir)\packages\T4IncludeWPF.1.0.1\T4\DependencyProperties.ttinclude" #>

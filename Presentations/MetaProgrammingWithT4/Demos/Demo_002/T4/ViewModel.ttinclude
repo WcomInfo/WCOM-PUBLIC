@@ -1,0 +1,276 @@
+﻿<#
+    // ----------------------------------------------------------------------------------------------
+    // Copyright (c) WCOM AB.
+    // ----------------------------------------------------------------------------------------------
+    // This source code is subject to terms and conditions of the Microsoft Public License. A 
+    // copy of the license can be found in the License.html file at the root of this distribution. 
+    // If you cannot locate the  Microsoft Public License, please send an email to 
+    // dlr@microsoft.com. By using this source code in any fashion, you are agreeing to be bound 
+    //  by the terms of the Microsoft Public License.
+    // ----------------------------------------------------------------------------------------------
+    // You must not remove this notice, or any other, from this software.
+    // ----------------------------------------------------------------------------------------------
+#>
+<#@ include     file        ="Header.ttinclude"             #>
+
+// ReSharper disable ExpressionIsAlwaysNull
+// ReSharper disable InconsistentNaming
+// ReSharper disable InvocationIsSkipped
+// ReSharper disable PartialMethodWithSinglePart
+// ReSharper disable PartialTypeWithSinglePart
+// ReSharper disable RedundantOverridenMember
+// ReSharper disable RedundantUsingDirective
+
+namespace <#=NamespaceName#>
+{    
+    using System.Text;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+
+<#
+    foreach (var classDef in ClassDefs)
+    {
+#>
+    partial class <#=classDef.Name#>ViewModel : <#=string.IsNullOrEmpty(classDef.ViewModel) ?  "BaseViewModel" : classDef.ViewModel#>
+    {
+<#
+    foreach (var propertyDef in classDef)
+    {
+#>
+<#
+    if (propertyDef.IsComputed)
+    {
+#>
+        // --------------------------------------------------------------------
+        public <#=propertyDef.Type#> <#=propertyDef.PropertyName#>
+        {
+            get
+            {
+                <#=propertyDef.Type#> value = <#=propertyDef.DefaultValue#>;
+                Compute__<#=propertyDef.PropertyName#> (ref value);
+                return value;
+            }
+        }
+        // --------------------------------------------------------------------
+        void RaisePropertyChanged__<#=propertyDef.PropertyName#> ()
+        {
+            RaisePropertyChanged ("<#=propertyDef.PropertyName#>");
+        }
+        // --------------------------------------------------------------------
+        partial void Compute__<#=propertyDef.PropertyName#> (ref <#=propertyDef.Type#> newValue);
+        // --------------------------------------------------------------------
+
+<#
+    }
+    else
+    {
+#>
+        // --------------------------------------------------------------------
+        public <#=propertyDef.Type#> <#=propertyDef.PropertyName#>
+        {
+            get
+            {
+                return <#=propertyDef.MemberName#>;
+            }
+            <#=propertyDef.IsReadOnly ? "private " : ""#>set
+            {
+                var oldValue = <#=propertyDef.MemberName#>;
+                if (oldValue != value)
+                {
+                    <#=propertyDef.MemberName#> = value;
+                    Changed__<#=propertyDef.PropertyName#>(oldValue, value);
+                    RaisePropertyChanged__<#=propertyDef.PropertyName#> ();
+                }
+            }
+        }
+
+<#
+    if (propertyDef.IsValidated)
+    {
+#>
+        public string GetErrorInfo__<#=propertyDef.PropertyName#>()
+        {
+            string errorInfo = null;
+            ErrorInfo__<#=propertyDef.PropertyName#> (<#=propertyDef.MemberName#>, ref errorInfo);
+            return errorInfo;
+        }
+<#
+    }
+#>
+        // --------------------------------------------------------------------
+        <#=propertyDef.Type#> <#=propertyDef.MemberName#> = <#=propertyDef.DefaultValue#>;
+        // --------------------------------------------------------------------
+        void RaisePropertyChanged__<#=propertyDef.PropertyName#> ()
+        {
+            RaisePropertyChanged ("<#=propertyDef.PropertyName#>");
+        }
+        // --------------------------------------------------------------------
+        partial void Changed__<#=propertyDef.PropertyName#> (<#=propertyDef.Type#> oldValue, <#=propertyDef.Type#> newValue);
+<#
+    if (propertyDef.IsValidated)
+    {
+#>
+        partial void ErrorInfo__<#=propertyDef.PropertyName#> (<#=propertyDef.Type#> value, ref string errorInfo);
+<#
+    }
+#>
+        // --------------------------------------------------------------------
+
+<#
+    }
+#>
+<#
+    }
+#>
+
+        protected override void OnToString(StringBuilder sb)
+        {
+<#
+    foreach (var propertyDef in classDef)
+    {
+#>
+            sb.Append (", <#=propertyDef.PropertyName#> = '");
+            sb.Append (<#=propertyDef.PropertyName#>);
+            sb.Append ("'");
+<#
+    }
+#>
+
+            sb.Append ("}");
+        }
+
+
+        protected override string OnGetErrorInfo(string columnName)
+        {
+            switch(columnName)
+            {
+<#
+    foreach (var propertyDef in classDef.Where(p => !p.IsComputed && p.IsValidated))
+    {
+#>
+            case "<#=propertyDef.PropertyName#>":
+                return GetErrorInfo__<#=propertyDef.PropertyName#>();
+<#
+    }
+#>
+            default:
+                return base.OnGetErrorInfo(columnName);
+            }
+        }
+
+        protected override bool OnTestIfValid()
+        {
+<#
+    foreach (var propertyDef in classDef.Where(p => !p.IsComputed && p.IsValidated))
+    {
+#>
+            {
+                var errorInfo = GetErrorInfo__<#=propertyDef.PropertyName#>();
+                if (!string.IsNullOrWhiteSpace(errorInfo))
+                {
+                    return false;
+                }
+            }
+<#
+    }
+#>
+            return base.OnTestIfValid();
+        }
+
+        protected override void OnGetErrorInfo(List<string> errors)
+        {
+<#
+    foreach (var propertyDef in classDef.Where(p => !p.IsComputed && p.IsValidated))
+    {
+#>
+            {
+                var errorInfo = GetErrorInfo__<#=propertyDef.PropertyName#>();
+                if (!string.IsNullOrWhiteSpace(errorInfo))
+                {
+                    errors.Add (errorInfo);
+                }
+            }
+<#
+    }
+#>
+        }
+
+    }
+<#
+    }
+#>   
+
+
+}
+
+<#+
+
+    static bool Default_IsValidated         = true                      ;
+
+    string NamespaceName                    = "WCOM"                    ;
+
+    ClassDefinition[]   ClassDefs           = new ClassDefinition[0]    ;
+
+
+
+    class ClassDefinition : BaseContainer<Root, PropertyDefinition>
+    {
+        public readonly string  Name        ;
+        public readonly string  ViewModel   ;
+
+        public ClassDefinition (string name, string viewModel = null)
+        {
+            Name        = name ?? "NoName"  ;
+            ViewModel   = viewModel         ; 
+        }
+    }
+
+    PropertyDefinition P (
+        string type                     , 
+        string name                     , 
+        string defaultValue     = null  ,
+        bool isReadOnly         = false ,
+        bool isComputed         = false ,
+        bool? isValidated       = null
+        )
+    {
+        return new PropertyDefinition
+        {
+            Type            = type                  ?? "<NoType>"                               ,
+            Name            = name                  ?? "<NoName>"                               ,
+            DefaultValue    = defaultValue          ?? "default (" + (type ?? "<NoType>") + ")" ,
+            IsReadOnly      = isReadOnly                                                        ,
+            IsComputed      = isComputed                                                        ,
+            IsValidated     = isValidated           ?? Default_IsValidated                      ,
+        };
+    }
+
+    class PropertyDefinition : BaseEntity<ClassDefinition>
+    {
+        public string               Type            ;
+        public string               Name            ;
+        public string               DefaultValue    ;
+        public bool                 IsReadOnly      ;
+        public bool                 IsComputed      ;
+        public bool                 IsValidated     = Default_IsValidated   ;
+
+        public string MemberName
+        {
+            get
+            {
+                return "m_p" + PropertyName;
+            }
+        }
+
+        public string PropertyName
+        {
+            get
+            {
+                return Parent.Name + "_" + Name;
+            }
+        }
+
+    }
+
+#>

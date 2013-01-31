@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A06AFF9B-0F9A-4B5E-A107-E7F04684B28B}"
+	ProjectSection(SolutionItems) = preProject
+		DapperSample2013Database.sql = DapperSample2013Database.sql
+		SqlMapper.cs = SqlMapper.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.001 - Hello World", "Demo.001 - Hello World\Demo.001 - Hello World.csproj", "{5C968CF1-EAA1-4544-A6AB-1BEE1B9CB5D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.002 - Poco", "Demo.002 - Poco\Demo.002 - Poco.csproj", "{3ADCB1BE-3B1D-4696-8F89-04E0E817A815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.003 – Dynamic", "Demo.003 – Dynamic\Demo.003 – Dynamic.csproj", "{E01211AD-A291-47FD-B8A1-883130EFDD2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.004 - Parameters", "Demo.004 - Parameters\Demo.004 - Parameters.csproj", "{66D39A65-0D28-4FE3-9C21-155861126C89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.005 – Multiple Results", "Demo.005 – Multiple Results\Demo.005 – Multiple Results.csproj", "{C7E701F5-3275-4AA4-827B-29B50892C9CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.006 – Multi Mapping", "Demo.006 – Multi Mapping\Demo.006 – Multi Mapping.csproj", "{A80F3048-0B54-4B19-8CA5-4283FE2A4947}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C968CF1-EAA1-4544-A6AB-1BEE1B9CB5D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C968CF1-EAA1-4544-A6AB-1BEE1B9CB5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C968CF1-EAA1-4544-A6AB-1BEE1B9CB5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C968CF1-EAA1-4544-A6AB-1BEE1B9CB5D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ADCB1BE-3B1D-4696-8F89-04E0E817A815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ADCB1BE-3B1D-4696-8F89-04E0E817A815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ADCB1BE-3B1D-4696-8F89-04E0E817A815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ADCB1BE-3B1D-4696-8F89-04E0E817A815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E01211AD-A291-47FD-B8A1-883130EFDD2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E01211AD-A291-47FD-B8A1-883130EFDD2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E01211AD-A291-47FD-B8A1-883130EFDD2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E01211AD-A291-47FD-B8A1-883130EFDD2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D39A65-0D28-4FE3-9C21-155861126C89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D39A65-0D28-4FE3-9C21-155861126C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D39A65-0D28-4FE3-9C21-155861126C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D39A65-0D28-4FE3-9C21-155861126C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7E701F5-3275-4AA4-827B-29B50892C9CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7E701F5-3275-4AA4-827B-29B50892C9CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7E701F5-3275-4AA4-827B-29B50892C9CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7E701F5-3275-4AA4-827B-29B50892C9CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A80F3048-0B54-4B19-8CA5-4283FE2A4947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A80F3048-0B54-4B19-8CA5-4283FE2A4947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A80F3048-0B54-4B19-8CA5-4283FE2A4947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A80F3048-0B54-4B19-8CA5-4283FE2A4947}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
