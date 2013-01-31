@@ -1,0 +1,57 @@
+﻿<UserControl 
+    x:Class="Demo_002.View.CreateUserView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:b="clr-namespace:Demo_002.Bindings"
+    mc:Ignorable="d" 
+    d:DesignHeight="300" 
+    d:DesignWidth="300"
+    >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock  Grid.Row="0"    Grid.Column="0" Text="User name"/>
+        <TextBox    Grid.Row="0"    Grid.Column="2" Text="{b:TwoWayImmediate CreateUser_UserName}"/>
+
+        <TextBlock  Grid.Row="2"    Grid.Column="0" Text="First name"/>
+        <TextBox    Grid.Row="2"    Grid.Column="2" Text="{b:TwoWayImmediate CreateUser_FirstName}"/>
+
+        <TextBlock  Grid.Row="4"    Grid.Column="0" Text="Last name"/>
+        <TextBox    Grid.Row="4"    Grid.Column="2" Text="{b:TwoWayImmediate CreateUser_LastName}"/>
+
+        <TextBlock  Grid.Row="6"    Grid.Column="0" Text="Region"/>
+        <ComboBox   Grid.Row="6"    Grid.Column="2" 
+                    SelectedValue="{b:TwoWay CreateUser_Region}"
+                    DisplayMemberPath="EnglishName"    
+                    ItemsSource="{b:OneWay CreateUser_Regions}"  
+                    />
+
+        <TextBlock  Grid.Row="8"    Grid.Column="0" Text="Culture"/>
+        <ComboBox   Grid.Row="8"    Grid.Column="2"
+                    SelectedValue="{b:TwoWay CreateUser_Culture}"
+                    DisplayMemberPath="EnglishName"    
+                    ItemsSource="{b:OneWay CreateUser_Cultures}"  
+                    />
+
+        <Button     Grid.Row="10"    Grid.Column="0" Height="24" VerticalAlignment="Top" Command="{b:OneTime CreateUser_SaveCommand}" Content="Save"/>
+        <TextBlock  Grid.Row="10"    Grid.Column="2" Foreground="Red" FontWeight="Bold" Text="{b:OneWay CreateUser_Error}"/>
+    </Grid>
+</UserControl>
